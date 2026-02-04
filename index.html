@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitScript - Precision Health</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">FITSCRIPT</div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#method">10-20-30</a>
+                <a href="#cases">Client Results</a>
+                <a href="#contact" class="btn-primary glow-btn">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="user-intro">
+                <div class="avatar-placeholder"></div>
+                <h1>Hoon Kang</h1>
+                <p class="subtitle">Peak Performance Health Strategy</p>
+            </div>
+            <div class="reviews-placeholder">
+                <!-- User to insert review widget here -->
+                <p style="opacity: 0.5; font-size: 0.9rem;">[Reviews Widget Placeholder]</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="content-section">
+        <div class="container">
+            <h2>The New Standard</h2>
+            <p class="lead-text">FitScript is not just a health program. It's a precision-engineered protocol designed
+                to rebuild your biology from the cellular level up, using data-driven insights.</p>
+        </div>
+
+        <!-- Scroll Blocker 1 (Photo Placeholder) -->
+        <div class="scroll-blocker">
+            <div class="photo-placeholder">
+                <span>[Insert Photo 1 Here]</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- The 10-20-30 Method (Sticky Graph) -->
+    <section id="method" class="sticky-track">
+        <div class="sticky-wrapper">
+
+            <div class="section-header">
+                <h2>The 10-20-30 Protocol</h2>
+                <p>Exponential health returns over time.</p>
+            </div>
+
+            <div class="graph-visuals">
+                <!-- 3D Perspective Grid Background -->
+                <div class="graph-grid"></div>
+
+                <!-- Labels Layer -->
+                <div class="graph-labels">
+                    <!-- Step 1 -->
+                    <div class="graph-label step-1">
+                        <h3>Consultation</h3>
+                        <div class="icon-box">01</div>
+                        <p>Initial assessment of goals and baseline metrics.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="graph-label step-2">
+                        <h3>Lab Analysis</h3>
+                        <div class="icon-box">02</div>
+                        <p>Comprehensive blood panel at nationwide labs.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="graph-label step-3">
+                        <h3>Results Review</h3>
+                        <div class="icon-box">03</div>
+                        <p>Deep-dive analysis of 124+ bio-markers.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="graph-label step-4">
+                        <h3>Custom Protocol</h3>
+                        <div class="icon-box">04</div>
+                        <p>Personalized roadmap to your biological peak.</p>
+                    </div>
+                </div>
+
+                <!-- SVG Graph Layer -->
+                <!-- ViewBox 1000x500 covers the drawing area -->
+                <svg class="interactive-svg" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                    <defs>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                            <feMerge>
+                                <feMergeNode in="coloredBlur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- CONNECTED LINE (Even Spacing) -->
+                    <!-- Points: (200,440) -> (450,400) -> (700,390) -> (950,50) -->
+                    <path class="graph-line" id="mainLine" d="M0,450 
+                           L50,455 L100,445 L150,450 L200,440 
+                           L250,445 L300,430 L350,435 L400,410 L450,400 
+                           L500,405 L550,410 L600,400 L650,395 L700,390 
+                           C750,380 800,300 850,200 
+                           L880,150 L900,100 L950,50 
+                           L975,45 L1000,50" fill="none" stroke="#b9f640" stroke-width="3" filter="url(#glow)">
+                    </path>
+
+                    <!-- Dots (Even Spacing) -->
+                    <circle class="graph-dot dot-1" cx="200" cy="440" r="6" fill="#b9f640" stroke="#fff"
+                        stroke-width="2"></circle>
+                    <circle class="graph-dot dot-2" cx="450" cy="400" r="6" fill="#b9f640" stroke="#fff"
+                        stroke-width="2"></circle>
+                    <circle class="graph-dot dot-3" cx="700" cy="390" r="6" fill="#b9f640" stroke="#fff"
+                        stroke-width="2"></circle>
+                    <circle class="graph-dot dot-4" cx="950" cy="50" r="6" fill="#b9f640" stroke="#fff"
+                        stroke-width="2"></circle>
+                </svg>
+            </div>
+
+            <!-- Ticker Bar -->
+            <div class="bottom-ticker">
+                <div class="ticker-progress-bar" id="tickerProgress"></div>
+                <!-- Items are purely visual indicators here, logic highlights them -->
+                <div class="ticker-item active" data-step="1">START</div>
+                <div class="ticker-item" data-step="2">LABS</div>
+                <div class="ticker-item" data-step="3">DATA</div>
+                <div class="ticker-item" data-step="4">LAUNCH</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Tabs Section (Full Screen / Horizontal Scroll) -->
+    <section id="cases" class="content-section full-screen-section">
+        <div class="container full-height-container">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="case-studies">Case Studies</button>
+                <button class="tab-btn" data-tab="free-resources">Resources</button>
+            </div>
+
+
+
+            <!-- Navigation Arrows (Neon Circle, Dark Arrow) -->
+            <button class="scroll-nav-btn prev-btn" aria-label="Previous">&lt;</button>
+            <button class="scroll-nav-btn next-btn" aria-label="Next">&gt;</button>
+
+            <div class="tabs-content full-height-content">
+                <!-- Case Studies: Horizontal Scrolling Container -->
+                <div class="tab-pane active horizontal-scroll-view" id="case-studies">
+                    <div class="review-card full-screen-card">
+                        <h3>Weight Loss Transformation</h3>
+                        <p>Client lost 20lbs of fat while gaining muscle in 12 weeks.</p>
+                        <p class="review-text">"The protocol changed my life. I've never felt this energetic."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Strength & Mobility</h3>
+                        <p>Significantly improved squat depth and pain-free movement.</p>
+                        <p class="review-text">"Finally lifting without knee pain. Hoon knows his stuff."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Marathon Prep</h3>
+                        <p>Shaved 15 minutes off PR with optimized nutrition.</p>
+                        <p class="review-text">"Data-driven coaching is the future. Highly recommend."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Post-Rehab Recovery</h3>
+                        <p>Returned to sport 3 months ahead of schedule.</p>
+                        <p class="review-text">"The most precise recovery plan I've ever followed."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Competition Prep</h3>
+                        <p>Achieved stage-ready physique with sustainable macros.</p>
+                        <p class="review-text">"Peak week was a breeze. No starvation, just results."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Lifestyle Transformation</h3>
+                        <p>Busy dad lost 30lbs without giving up family dinners.</p>
+                        <p class="review-text">"This is the first time I've kept the weight off for good."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Hypertrophy Phase</h3>
+                        <p>Gained 12lbs of lean mass in an advanced training block.</p>
+                        <p class="review-text">"My bench press went up 40lbs. Insane gains."</p>
+                    </div>
+                </div>
+
+                <div class="tab-pane horizontal-scroll-view" id="free-resources">
+                    <div class="review-card full-screen-card">
+                        <h3>Workout Cheat Sheet</h3>
+                        <p>Download the PDF guide for busy professionals.</p>
+                        <p class="review-text">"Efficient, effective, and easy to follow."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Nutrition Blueprint</h3>
+                        <p>The 10-20-30 Macro Strategy Guide.</p>
+                        <p class="review-text">"Simple, sustainable nutrition that works."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Sleep Protocol</h3>
+                        <p>Optimize your circadian rhythm for peak performance.</p>
+                        <p class="review-text">"I sleep better now than I did in my 20s."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Supplement Guide</h3>
+                        <p>Science-backed stack for longevity and focus.</p>
+                        <p class="review-text">"No more guessing what to take. Pure clarity."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Mobility Routine</h3>
+                        <p>15-minute daily flow to bulletproof your joints.</p>
+                        <p class="review-text">"My back pain vanished after a week of this."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Meal Prep Masterclass</h3>
+                        <p>Video series on cooking healthy meals in under 20 mins.</p>
+                        <p class="review-text">"Saved me 5 hours a week in the kitchen."</p>
+                    </div>
+                    <div class="review-card full-screen-card">
+                        <h3>Mindset Manual</h3>
+                        <p>Psychological frameworks for discipline and consistency.</p>
+                        <p class="review-text">"The mental shift I needed to finally stick to the plan."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <h3>Ready to optimize?</h3>
+            <a href="#" class="btn-primary">Schedule Your Deep Dive</a>
+            <p class="copyright">© 2026 FitScript. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
