@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     initStickyGraph();
+    initAboutReveal();
 });
 
 // --- Tab Switching Logic ---
@@ -51,6 +52,11 @@ function initStickyGraph() {
 
     if (!track || !svgLine) return;
 
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReducedMotion) {
+        return;
+    }
+
     // SVG Path Length for drawing animation
     const pathLength = svgLine.getTotalLength();
     svgLine.style.strokeDasharray = pathLength;
@@ -61,47 +67,63 @@ function initStickyGraph() {
     const labels = document.querySelectorAll('.graph-label');
     const tickerItems = document.querySelectorAll('.ticker-item');
 
-    window.addEventListener('scroll', () => {
-        const rect = track.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
+    let ticking = false;
 
-        // "Scrollable Distance" is how much we stick for (Container Height - Viewport)
-        const trackHeight = rect.height;
-        const scrollableDistance = trackHeight - windowHeight;
+    const onScroll = () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const rect = track.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
 
-        // Calculate raw percentage based on how far 'track' has moved up
-        let percentage = (-rect.top) / scrollableDistance;
+                // "Scrollable Distance" is how much we stick for (Container Height - Viewport)
+                const trackHeight = rect.height;
+                const scrollableDistance = trackHeight - windowHeight;
+                if (scrollableDistance <= 0) {
+                    ticking = false;
+                    return;
+                }
 
-        // Clamp 0 to 1
-        percentage = Math.max(0, Math.min(1, percentage));
+                // Calculate raw percentage based on how far 'track' has moved up
+                let percentage = (-rect.top) / scrollableDistance;
 
-        // 1. Draw Line (Accelerated)
-        // We divide percentage by 0.85 so that the line finishes drawing
-        // when the user is 85% of the way through the scroll.
-        // This guarantees the 'spike' reaches the end before they scroll past.
-        let drawPhase = percentage / 0.85;
-        if (drawPhase > 1) drawPhase = 1; // Cap at 100% drawn
+                // Clamp 0 to 1
+                percentage = Math.max(0, Math.min(1, percentage));
 
-        const drawLength = pathLength * drawPhase;
-        svgLine.style.strokeDashoffset = pathLength - drawLength;
+                // 1. Draw Line (Accelerated)
+                // We divide percentage by 0.85 so that the line finishes drawing
+                // when the user is 85% of the way through the scroll.
+                // This guarantees the 'spike' reaches the end before they scroll past.
+                const isMobileViewport = window.matchMedia('(max-width: 900px)').matches;
+                const drawAcceleration = isMobileViewport ? 0.7 : 0.85;
+                let drawPhase = percentage / drawAcceleration;
+                if (drawPhase > 1) drawPhase = 1; // Cap at 100% drawn
 
-        // 2. Update Ticker Bar (matches scroll exactly)
-        if (tickerProgress) {
-            tickerProgress.style.width = `${percentage * 100}%`;
+                const drawLength = pathLength * drawPhase;
+                svgLine.style.strokeDashoffset = pathLength - drawLength;
+
+                // 2. Update Ticker Bar (matches scroll exactly)
+                if (tickerProgress) {
+                    tickerProgress.style.width = `${percentage * 100}%`;
+                }
+
+                // 3. Activate Steps
+                // Thresholds match the even spacing (20%, 45%, 70%, 95%)
+                // We trigger slightly earlier to make UI feel responsive
+                let activeIndex = -1;
+                if (percentage > 0.15) activeIndex = 0;
+                if (percentage > 0.40) activeIndex = 1;
+                if (percentage > 0.65) activeIndex = 2;
+                if (percentage > 0.80) activeIndex = 3;
+
+                // Update UI
+                updateStep(activeIndex);
+                ticking = false;
+            });
+            ticking = true;
         }
+    };
 
-        // 3. Activate Steps
-        // Thresholds match the even spacing (20%, 45%, 70%, 95%)
-        // We trigger slightly earlier to make UI feel responsive
-        let activeIndex = -1;
-        if (percentage > 0.15) activeIndex = 0;
-        if (percentage > 0.40) activeIndex = 1;
-        if (percentage > 0.65) activeIndex = 2;
-        if (percentage > 0.80) activeIndex = 3;
-
-        // Update UI
-        updateStep(activeIndex);
-    });
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     function updateStep(index) {
         // Reset all dots first (or keep them lit? Let's keep cumulative lit)
@@ -124,4 +146,22 @@ function initStickyGraph() {
             if (tickerItems[index]) tickerItems[index].classList.add('active');
         }
     }
+}
+
+function initAboutReveal() {
+    const aboutText = document.querySelector('.about-photo-text');
+    if (!aboutText) return;
+
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        },
+        { threshold: 0.4 }
+    );
+
+    observer.observe(aboutText);
 }
