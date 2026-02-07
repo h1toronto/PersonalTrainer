@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     initStickyGraph();
+    initAboutReveal();
 });
 
 // --- Tab Switching Logic ---
@@ -140,4 +141,22 @@ function initStickyGraph() {
             if (tickerItems[index]) tickerItems[index].classList.add('active');
         }
     }
+}
+
+function initAboutReveal() {
+    const aboutText = document.querySelector('.about-photo-text');
+    if (!aboutText) return;
+
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        },
+        { threshold: 0.4 }
+    );
+
+    observer.observe(aboutText);
 }

@@ -82,6 +82,26 @@ body {
     background: #0f1115;
 }
 
+.about-photo {
+    position: relative;
+    overflow: hidden;
+}
+
+.about-photo-text {
+    color: var(--color-primary);
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.about-photo-text.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* --- Navigation --- */
 .navbar {
     position: fixed;
