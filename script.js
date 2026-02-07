@@ -53,7 +53,8 @@ function initStickyGraph() {
     if (!track || !svgLine) return;
 
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isReducedMotion) {
+    const isMobile = window.matchMedia('(max-width: 900px)').matches;
+    if (isReducedMotion || isMobile) {
         return;
     }
 
@@ -78,10 +79,6 @@ function initStickyGraph() {
                 // "Scrollable Distance" is how much we stick for (Container Height - Viewport)
                 const trackHeight = rect.height;
                 const scrollableDistance = trackHeight - windowHeight;
-                if (scrollableDistance <= 0) {
-                    ticking = false;
-                    return;
-                }
 
                 // Calculate raw percentage based on how far 'track' has moved up
                 let percentage = (-rect.top) / scrollableDistance;
@@ -93,9 +90,7 @@ function initStickyGraph() {
                 // We divide percentage by 0.85 so that the line finishes drawing
                 // when the user is 85% of the way through the scroll.
                 // This guarantees the 'spike' reaches the end before they scroll past.
-                const isMobileViewport = window.matchMedia('(max-width: 900px)').matches;
-                const drawAcceleration = isMobileViewport ? 0.7 : 0.85;
-                let drawPhase = percentage / drawAcceleration;
+                let drawPhase = percentage / 0.85;
                 if (drawPhase > 1) drawPhase = 1; // Cap at 100% drawn
 
                 const drawLength = pathLength * drawPhase;

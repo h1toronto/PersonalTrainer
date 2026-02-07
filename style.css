@@ -514,8 +514,8 @@ body {
     white-space: normal;
     /* Allow text wrapping inside */
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     scroll-snap-align: center;
     transition: transform 0.3s;
     gap: 16px;
@@ -546,33 +546,42 @@ body {
 }
 
 .case-photo {
-    flex: 0 0 40%;
-    max-width: 320px;
+    width: 100%;
+    max-width: 520px;
     aspect-ratio: 4 / 3;
     border-radius: 16px;
     background: linear-gradient(135deg, rgba(185, 246, 64, 0.15), rgba(255, 255, 255, 0.05));
     border: 1px dashed rgba(185, 246, 64, 0.5);
     display: flex;
-    align-self: stretch;
-}
-
-.case-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-self: center;
 }
 
 /* --- Mobile Optimizations --- */
 @media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hero-section {
+        height: auto;
+        padding: 80px 0 40px;
+    }
+
+    .user-intro h1 {
+        font-size: 2.4rem;
+    }
+
+    .content-section {
+        padding: 70px 0;
+    }
+
     .sticky-track {
-        height: 220vh;
+        height: auto;
     }
 
     .sticky-wrapper {
-        position: sticky;
-        top: 0;
-        height: 100vh;
+        position: static;
+        height: auto;
         padding: 40px 0 80px;
     }
 
@@ -617,8 +626,6 @@ body {
         flex: 0 0 85vw;
         height: auto;
         padding: 28px;
-        flex-direction: column;
-        align-items: stretch;
     }
 
     .review-card h3 {
@@ -637,7 +644,6 @@ body {
 
     .case-photo {
         max-width: 100%;
-        flex: 0 0 auto;
     }
 }
 
